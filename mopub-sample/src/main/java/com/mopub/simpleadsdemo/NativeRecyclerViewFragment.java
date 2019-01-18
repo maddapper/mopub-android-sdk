@@ -25,6 +25,7 @@ import com.mopub.nativeads.MoPubRecyclerAdapter;
 import com.mopub.nativeads.MoPubVideoNativeAdRenderer;
 import com.mopub.nativeads.RequestParameters;
 import com.mopub.nativeads.ViewBinder;
+import com.zoosk.SearchAdapter;
 
 import java.util.EnumSet;
 import java.util.Locale;
@@ -39,7 +40,7 @@ public class NativeRecyclerViewFragment extends Fragment {
 
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container,
-            @Nullable final Bundle savedInstanceState) {
+                             @Nullable final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
         mAdConfiguration = MoPubSampleAdUnit.fromBundle(getArguments());
@@ -89,7 +90,7 @@ public class NativeRecyclerViewFragment extends Fragment {
         viewHolder.mKeywordsField.setText(getArguments().getString(MoPubListFragment.KEYWORDS_KEY, ""));
         viewHolder.mUserDataKeywordsField.setText(getArguments().getString(MoPubListFragment.USER_DATA_KEYWORDS_KEY, ""));
 
-        final RecyclerView.Adapter originalAdapter = new DemoRecyclerAdapter();
+        final RecyclerView.Adapter originalAdapter = new SearchAdapter();
 
         mRecyclerAdapter = new MoPubRecyclerAdapter(getActivity(), originalAdapter,
                 new MoPubNativeAdPositioning.MoPubServerPositioning());
@@ -143,41 +144,42 @@ public class NativeRecyclerViewFragment extends Fragment {
         super.onDestroyView();
     }
 
-    private static class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
-        private static final int ITEM_COUNT = 150;
-        @Override
-        public DemoViewHolder onCreateViewHolder(final ViewGroup parent,
-                final int viewType) {
-            final View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(android.R.layout.simple_list_item_1, parent, false);
-            return new DemoViewHolder(itemView);
-        }
+//    private static class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
+//        private static final int ITEM_COUNT = 150;
+//        @Override
+//        public DemoViewHolder onCreateViewHolder(final ViewGroup parent,
+//                                                 final int viewType) {
+//            final View itemView = LayoutInflater.from(parent.getContext())
+//                    .inflate(android.R.layout.simple_list_item_1, parent, false);
+//            return new DemoViewHolder(itemView);
+//        }
+//
+//        @Override
+//        public void onBindViewHolder(final DemoViewHolder holder, final int position) {
+//            holder.textView.setText(String.format(Locale.US, "Content Item #%d", position));
+//        }
+//
+//        @Override
+//        public long getItemId(final int position) {
+//            return (long) position;
+//        }
+//
+//        @Override
+//        public int getItemCount() {
+//            return ITEM_COUNT;
+//        }
+//    }
+//
+//    /**
+//     * A view holder for R.layout.simple_list_item_1
+//     */
+//    private static class DemoViewHolder extends RecyclerView.ViewHolder {
+//        public final TextView textView;
+//
+//        public DemoViewHolder(final View itemView) {
+//            super(itemView);
+//            textView = (TextView) itemView.findViewById(android.R.id.text1);
+//        }
+//    }
 
-        @Override
-        public void onBindViewHolder(final DemoViewHolder holder, final int position) {
-            holder.textView.setText(String.format(Locale.US, "Content Item #%d", position));
-        }
-
-        @Override
-        public long getItemId(final int position) {
-            return (long) position;
-        }
-
-        @Override
-        public int getItemCount() {
-            return ITEM_COUNT;
-        }
-    }
-
-    /**
-     * A view holder for R.layout.simple_list_item_1
-     */
-    private static class DemoViewHolder extends RecyclerView.ViewHolder {
-        public final TextView textView;
-
-        public DemoViewHolder(final View itemView) {
-            super(itemView);
-            textView = (TextView) itemView.findViewById(android.R.id.text1);
-        }
-    }
 }
